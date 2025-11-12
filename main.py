@@ -1,11 +1,16 @@
 """
-main.py
-Sistema de planejamento de produção com Branch & Bound (quantidades inteiras)
-e dashboard interativo em Streamlit.
+Branch & Bound para Planejamento de Produção com Quantidades Inteiras
+
+Euipe:
+- Vitor G. J. de Carvalho
+- Kauã A. de Almeida
+- Lucas Tiepo de Oliveira
+- Luiz Henrique dos Santos
+- Rafael Lucena 
+
 """
 
 import json
-import math
 import heapq
 import time
 import pandas as pd
@@ -116,7 +121,7 @@ class BBNode:
         self.quantities = quantities
         self.bound = bound
     def __lt__(self, other):
-        return self.bound > other.bound  # max-heap behavior
+        return self.bound > other.bound
 
 def bound_estimate(items, capacity, level, profit, time_used):
     """Relaxação fracionária."""
@@ -160,7 +165,7 @@ def branch_and_bound_integer(items, capacity, time_limit=TIME_LIMIT_SECONDS):
         if lvl >= n:
             continue
         item = items[lvl]
-        for q in range(item["amount"], -1, -1):  # testa todas as quantidades possíveis
+        for q in range(item["amount"], -1, -1):
             t_new = node.time_used + q * item["estimated_time"]
             p_new = node.profit + q * item["profit_unit"]
             if t_new <= capacity:
